@@ -27,6 +27,7 @@ jobs:
     name: Extract and check Calendar
     uses: aNNiPAk/oplus-stock-app-bot/.github/workflows/update.yml@main
     with:
+      app_repository: oplus-calendar
       allow_publication: true
       ota_url_override: ${{ inputs.ota_url_override || '' }}
       dry_run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
