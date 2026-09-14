@@ -1,0 +1,30 @@
+name: Update OPlus Calendar
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/update.yml
+  schedule:
+    - cron: "23 4 * * *"
+  workflow_dispatch:
+    inputs:
+      ota_url_override:
+        description: Optional direct Full OTA URL
+        required: false
+        type: string
+      dry_run:
+        description: Extract and compare without publishing
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    uses: aNNiPAk/oplus-stock-app-bot/.github/workflows/update.yml@main
+    with:
+      ota_url_override: ${{ inputs.ota_url_override || '' }}
+      dry_run: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
