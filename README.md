@@ -1,18 +1,24 @@
-# OPlus Calendar
+# OPlus calendar
 
-Канал обновлений оригинального приложения `com.oplus.calendar` для Obtainium.
+Канал исходного stock APK `com.oplus.calendar` для Obtainium.
 
-APK извлекаются из OTA realme 16 Pro+ (RMX5131) проектом [OPlus Stock App Bot](https://github.com/aNNiPAk/oplus-stock-app-bot). Перед публикацией проверяются версия и сертификат подписи.
+Источник выбирается из свежих OTA разных **OPPO, OnePlus и realme**. По умолчанию проверяются до шести доноров; победитель определяется по реальному Android `versionCode`.
+
+- **Обычный релиз:** базовый APK содержит русский.
+- **Prerelease (`-exp`):** более новый APK без русского, с английским либо неизвестным языком ресурсов.
+- APK только с другими явно указанными языками не публикуется.
+- Подпись проверяется; SHA-256 сертификата записывается, но смена сертификата не блокирует обновление.
+- Overlays, `uses-library` и native библиотеки записываются в отчёт для диагностики.
+
 
 ## Запуск
 
-Откройте [Actions → Update OPlus Calendar](https://github.com/aNNiPAk/oplus-calendar/actions/workflows/update.yml) и нажмите Run workflow.
+Daily schedule включён. Для ручной проверки: Actions → Update OPlus calendar → Run workflow → оставить `dry_run: true`. Для публикации отключить `dry_run`.
 
-- `dry_run = true`: извлечь APK и проверить возможность обновления, без публикации.
-- `dry_run = false`: опубликовать обновление, если versionCode увеличился и подпись совместима.
+Workflow сначала выполняет dry-run, затем повторно проверяет выбранные APK и публикует их без второго извлечения OTA. Встроенный `GITHUB_TOKEN` этого канала публикует в этот же репозиторий; PAT не требуется.
 
-Обновление также запускается ежедневно в 04:23 UTC. Используется встроенный GITHUB_TOKEN этого репозитория; отдельный PAT не требуется.
+Добавьте URL репозитория в Obtainium как GitHub source. Отключённые prereleases оставят вас на stable с русским; включайте их для experimental версий.
 
-## Obtainium
+Каждый релиз содержит один неизменённый APK, его SHA-256, сертификат, языки и точный источник прошивки.
 
-После появления первого APK в Releases добавьте `https://github.com/aNNiPAk/oplus-calendar` как источник Obtainium.
+[Код и политика выбора доноров](https://github.com/aNNiPAk/oplus-stock-app-bot).
